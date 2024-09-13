@@ -1,10 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List
 
-from app.blog.post.infrastructure.models.category import Category
-from app.blog.post.infrastructure.models.tag import Tag
-
-class PostModel(BaseModel):
+class PostSchema(BaseModel):
     id: int = Field(..., examples=[1])
     title: str = Field(..., examples=["Default title"])
     content: str = Field(..., examples=["Default content"])

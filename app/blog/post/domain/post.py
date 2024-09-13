@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass
-from app.blog.post.domain.models.category import Category
-from app.blog.post.domain.models.tag import Tag
+from app.blog.post.domain.category import Category
+from app.blog.post.domain.tag import Tag
 
 @dataclass
 class Post:
@@ -14,8 +14,6 @@ class Post:
     id: int
 
     def to_dict(self):
-        print(self.content)
-        print(self.category)
         return {
             "id": self.id,
             "title": self.title,

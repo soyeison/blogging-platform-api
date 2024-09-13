@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from fastapi.responses import JSONResponse
-from app.blog.post.application.read_all_posts_use_case import ReadAllPostsUseCase
-from app.blog.post.infrastructure.in_memory_post_repository import InMemoryPostRepository
-from app.blog.post.infrastructure.models.post import PostModel
+from app.blog.post.infrastructure.repositories.in_memory_post_repository import InMemoryPostRepository
+from app.blog.post.application.post_service import PostService
+from app.blog.post.infrastructure.schemas.post import PostSchema
 
 class PostController:
     def __init__(self) -> None:
@@ -11,14 +11,15 @@ class PostController:
         self._add_routes()
 
     def _add_routes(self):
-        self.router.get("/", response_model=List[PostModel])(self.read_all_posts)
+        self.router.get("/", response_model=List[PostSchema])(self.read_all_posts)
 
     async def read_all_posts(self):
         try:
             post_repository = InMemoryPostRepository()
-            read_all_posts_use_case = ReadAllPostsUseCase(post_repository)
-            content = read_all_posts_use_case.execute()
+            post_service = PostService(post_repository)
+            content = post_service.getAll()
 
             return JSONResponse(content=content, status_code=200)
         except Exception as e:
+            print(e)
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

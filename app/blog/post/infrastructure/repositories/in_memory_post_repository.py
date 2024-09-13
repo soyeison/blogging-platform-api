@@ -1,5 +1,5 @@
 from typing import List
-from app.blog.post.domain.post_repository import PostRepository
+from app.blog.post.application.ports.post_repository import PostRepository
 from app.blog.post.infrastructure.dtos.post_dto import PostDTO
 
 class InMemoryPostRepository(PostRepository):
