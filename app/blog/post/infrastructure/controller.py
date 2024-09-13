@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
 from fastapi.responses import JSONResponse
-from blog.post.application.read_all_posts_use_case import ReadAllPostsUseCase
-from blog.post.infrastructure.in_memory_post_repository import InMemoryPostRepository
+from app.blog.post.application.read_all_posts_use_case import ReadAllPostsUseCase
+from app.blog.post.infrastructure.in_memory_post_repository import InMemoryPostRepository
 from app.blog.post.infrastructure.models.post import PostModel
 
 class PostController:

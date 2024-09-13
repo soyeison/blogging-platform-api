@@ -1,6 +1,6 @@
 from typing import List
 from app.blog.post.domain.post_repository import PostRepository
-from blog.post.infrastructure.dtos.post_dto import PostDTO
+from app.blog.post.infrastructure.dtos.post_dto import PostDTO
 
 class InMemoryPostRepository(PostRepository):
     def __init__(self):

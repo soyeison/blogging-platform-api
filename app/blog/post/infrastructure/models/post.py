@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field
 from typing import List
 
-from blog.post.infrastructure.models.category import Category
-from blog.post.infrastructure.models.tag import Tag
+from app.blog.post.infrastructure.models.category import Category
+from app.blog.post.infrastructure.models.tag import Tag
 
 class PostModel(BaseModel):
     id: int = Field(..., examples=[1])

@@ -1,20 +1,14 @@
 from fastapi import FastAPI
-import uvicorn
 
-from blog.post.application.read_all_posts_use_case import ReadAllPostsUseCase
-from blog.post.infrastructure.in_memory_post_repository import InMemoryPostRepository
-from blog.post.infrastructure.controller import PostController
+from app.config import settings
 
-def create_app():
-    app = FastAPI()
+from app.blog.post.infrastructure.controller import PostController
 
-    post_controller = PostController()
+app = FastAPI(
+    title=settings.app_name,
+    debug=settings.debug
+)
 
-    app.include_router(post_controller.router, prefix="/posts", tags=["Post"])
+post_controller = PostController()
 
-    return app
-
-app = create_app()
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+app.include_router(post_controller.router, prefix="/posts", tags=["Post"])

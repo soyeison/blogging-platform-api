@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
-from blog.post.infrastructure.dtos.post_dto import PostDTO
+from app.blog.post.infrastructure.dtos.post_dto import PostDTO
 
 class PostRepository(ABC):
     @abstractmethod

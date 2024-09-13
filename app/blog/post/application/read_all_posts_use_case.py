@@ -1,9 +1,9 @@
 from typing import Any, List
-from blog.post.infrastructure.dtos.post_dto import PostDTO
+from app.blog.post.infrastructure.dtos.post_dto import PostDTO
 from app.blog.post.domain.post_repository import PostRepository
-from blog.post.domain.mappers.post_mapper import PostMapper
-from blog.post.domain.models.post import Post
-from blog.post.infrastructure.models.post import PostModel
+from app.blog.post.domain.mappers.post_mapper import PostMapper
+from app.blog.post.domain.models.post import Post
+from app.blog.post.infrastructure.models.post import PostModel
 
 class ReadAllPostsUseCase():
     def __init__(self, post_repository: PostRepository):

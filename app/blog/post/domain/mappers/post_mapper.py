@@ -1,7 +1,7 @@
-from blog.post.domain.models.post import Post
-from blog.post.domain.models.category import Category
-from blog.post.domain.models.tag import Tag
-from blog.post.infrastructure.dtos.post_dto import PostDTO
+from app.blog.post.domain.models.post import Post
+from app.blog.post.domain.models.category import Category
+from app.blog.post.domain.models.tag import Tag
+from app.blog.post.infrastructure.dtos.post_dto import PostDTO
 
 class PostMapper:
     @staticmethod

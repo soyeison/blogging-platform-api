@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass
-from blog.post.domain.models.category import Category
-from blog.post.domain.models.tag import Tag
+from app.blog.post.domain.models.category import Category
+from app.blog.post.domain.models.tag import Tag
 
 @dataclass
 class Post:
