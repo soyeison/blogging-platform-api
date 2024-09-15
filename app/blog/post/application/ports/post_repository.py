@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
-from app.blog.post.infrastructure.dtos.post_dto import PostDTO
+from app.blog.post.domain.post import PostEntity
 
 class PostRepository(ABC):
     @abstractmethod
@@ -8,7 +8,7 @@ class PostRepository(ABC):
         pass
 
     @abstractmethod
-    def readAllPosts(self) -> List[PostDTO]:
+    def readAllPosts(self) -> List[PostEntity]:
         pass
 
     @abstractmethod

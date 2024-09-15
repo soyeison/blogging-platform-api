@@ -1,10 +1,16 @@
 from typing import Optional
-from dataclasses import dataclass
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from app.database import Base
 
-@dataclass
-class Category:
-    name: str
-    id: Optional[str] = None
+
+class CategoryEntity(Base):
+    __tablename__ = "category"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+
+    posts = relationship("PostEntity")
 
     def to_dict(self):
         return {

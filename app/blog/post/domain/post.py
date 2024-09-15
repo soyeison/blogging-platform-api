@@ -1,17 +1,20 @@
 from typing import List
-from dataclasses import dataclass
-from app.blog.post.domain.category import Category
-from app.blog.post.domain.tag import Tag
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
+from datetime import datetime, timezone
+from app.database import Base
 
-@dataclass
-class Post:
-    title: str
-    content: str
-    category: Category
-    tags: List[Tag]
-    createdAt: str
-    updatedAt: str
-    id: int
+class PostEntity(Base):
+    __tablename__ = "post"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    content = Column(String)
+    categoryId = Column(Integer, ForeignKey('category.id'), nullable=True)
+    createdAt = Column(DateTime, default=datetime.now(timezone.utc))
+    updatedAt = Column(DateTime, default=datetime.now(timezone.utc))
+
+    category = relationship("CategoryEntity")
 
     def to_dict(self):
         return {
