@@ -2,6 +2,7 @@ from app.blog.post.application.ports.post_repository import PostRepository
 from app.blog.post.domain.post import PostEntity
 from app.blog.post.domain.category import CategoryEntity
 from app.blog.post.infrastructure.schemas.post import PostSchema
+from app.blog.post.infrastructure.schemas.post import PostCreateSchema
 
 class PostService:
     def __init__(self, post_repository: PostRepository):
@@ -17,6 +18,15 @@ class PostService:
             post_resp = [post.to_dict() for post in posts_schema]
 
             return post_resp
+        except Exception as e:
+            raise e
+    
+    def create(self, post: PostCreateSchema):
+        try:
+            post = self.posts.createPost(post)
+
+            post_schema = self.response_format(post)
+            return post_schema.to_dict()
         except Exception as e:
             raise e
     
