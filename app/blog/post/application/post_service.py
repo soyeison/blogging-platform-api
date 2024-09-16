@@ -1,8 +1,8 @@
 from app.blog.post.application.ports.post_repository import PostRepository
 from app.blog.post.domain.post import PostEntity
-from app.blog.post.domain.category import CategoryEntity
 from app.blog.post.infrastructure.schemas.post import PostSchema
 from app.blog.post.infrastructure.schemas.post import PostCreateSchema
+from app.database import Base, engine
 
 class PostService:
     def __init__(self, post_repository: PostRepository):
@@ -18,6 +18,15 @@ class PostService:
             post_resp = [post.to_dict() for post in posts_schema]
 
             return post_resp
+        except Exception as e:
+            raise e
+        
+    def seed_tables(self):
+        try:
+            ## Crear las tablas de la db
+            Base.metadata.create_all(bind=engine)
+            
+            return {"message": "Table created successfully"}
         except Exception as e:
             raise e
     

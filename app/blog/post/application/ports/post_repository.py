@@ -19,3 +19,7 @@ class PostRepository(ABC):
     @abstractmethod
     def deletePost(self):
         pass
+
+    @abstractmethod
+    def deletePost(self):
+        pass
