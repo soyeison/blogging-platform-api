@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 from app.blog.post.domain.post import PostEntity
 from app.blog.post.domain.category import CategoryEntity
+from app.blog.post.domain.tag import TagEntity
 from app.blog.post.infrastructure.schemas.post import PostCreateSchema
 from app.blog.post.application.ports.post_repository import PostRepository
 
@@ -24,6 +25,13 @@ class PostgresPostRepository(PostRepository):
             if category is None:
                 raise Exception(f"The category {post.category} doesn't exist")
             
+            
+            # Consultar el id del tag
+            tags = self.db.query(TagEntity).filter(TagEntity.name.in_(post.tags)).all()
+            
+            if tags is None or len(tags) == 0:
+                raise Exception(f"The tags don't exist")
+
             db_post = PostEntity(
                 title=post.title,
                 content=post.content,
@@ -32,6 +40,11 @@ class PostgresPostRepository(PostRepository):
                 updatedAt=datetime.now()
             )
             self.db.add(db_post)
+
+            # Agregar los tags asociados
+            for tag in tags:
+                db_post.tags.append(tag)
+
             self.db.commit()
             self.db.refresh(db_post)
             return db_post

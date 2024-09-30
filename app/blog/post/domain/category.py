@@ -10,7 +10,7 @@ class CategoryEntity(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
 
-    posts = relationship("PostEntity")
+    posts = relationship("PostEntity", back_populates="category", uselist=True)
 
     def to_dict(self):
         return {

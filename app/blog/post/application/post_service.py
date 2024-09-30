@@ -20,15 +20,6 @@ class PostService:
             return post_resp
         except Exception as e:
             raise e
-        
-    def seed_tables(self):
-        try:
-            ## Crear las tablas de la db
-            Base.metadata.create_all(bind=engine)
-            
-            return {"message": "Table created successfully"}
-        except Exception as e:
-            raise e
     
     def create(self, post: PostCreateSchema):
         try:
@@ -45,7 +36,7 @@ class PostService:
             title=post.title,
             content=post.content,
             category=post.category.name,
-            tags=["tasg1", "tag2"],
+            tags=[tag_db.name for tag_db in post.tags],
             createdAt=post.createdAt.strftime('%m/%d/%Y'),
             updatedAt=post.updatedAt.strftime('%m/%d/%Y')
         )

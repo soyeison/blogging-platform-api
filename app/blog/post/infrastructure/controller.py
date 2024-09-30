@@ -5,12 +5,16 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.blog.post.infrastructure.repositories.postgres_post_respository import PostgresPostRepository
 from app.blog.post.infrastructure.repositories.postgres_category_repository import PostgresCategoryRepository
+from app.blog.post.infrastructure.repositories.postgres_tag_repository import PostgresTagRepository
 from app.blog.post.application.post_service import PostService
 from app.blog.post.application.category_service import CategoryService
+from app.blog.post.application.tag_service import TagService
 from app.blog.post.infrastructure.schemas.post import PostSchema
 from app.blog.post.infrastructure.schemas.post import PostCreateSchema
 from app.blog.post.infrastructure.schemas.category import CategorySchema
 from app.blog.post.infrastructure.schemas.category import CategoryCreateSchema
+from app.blog.post.infrastructure.schemas.tag import TagSchema
+from app.blog.post.infrastructure.schemas.tag import TagCreateSchema
 
 class PostController:
     def __init__(self) -> None:
@@ -22,6 +26,7 @@ class PostController:
         self.router.get("/seed")(self.seed_tables)
         self.router.post("/", response_model=PostSchema)(self.create_post)
         self.router.post("/category", response_model=CategorySchema)(self.create_category)
+        self.router.post("/tag", response_model=TagSchema)(self.create_tag)
 
     async def read_all_posts(self, db: Session = Depends(get_db)):
         try:
@@ -60,6 +65,17 @@ class PostController:
             category_repository = PostgresCategoryRepository(db)
             category_service = CategoryService(category_repository)
             content = category_service.create(post)
+
+            return JSONResponse(content=content, status_code=201)
+        except Exception as e:
+            print(e)
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        
+    async def create_tag(self, tag: TagCreateSchema, db: Session = Depends(get_db)):
+        try:
+            tag_repository = PostgresTagRepository(db)
+            tag_service = TagService(tag_repository)
+            content = tag_service.create(tag)
 
             return JSONResponse(content=content, status_code=201)
         except Exception as e:

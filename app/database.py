@@ -14,3 +14,10 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def init_db():
+    from app.blog.post.domain.post import PostEntity
+    from app.blog.post.domain.category import CategoryEntity
+    from app.blog.post.domain.tag import TagEntity
+    # Crear las tablas de la base de datos
+    Base.metadata.create_all(bind=engine)

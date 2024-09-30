@@ -1,13 +1,13 @@
 from typing import Optional
-from dataclasses import dataclass
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+from app.database import Base
+from app.blog.post.domain.post_tag import post_tag_association
 
-@dataclass
-class Tag:
-    name: str
-    id: Optional[int] = None
+class TagEntity(Base):
+    __tablename__ = "tag"
 
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name
-        }
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+
+    posts = relationship("PostEntity", secondary=post_tag_association, back_populates="tags")
